@@ -1,0 +1,17 @@
+completion
+alt + / 函数方法名补全
+alt +enter
+
+editing
+字符串可能用到的方法 ctrl + space + space
+
+navigation
+代码调用 ctrl + H
+代码调用 ctrl + alt + H
+查看是方法哪个文件里 alt + F1
+
+refactoring
+生成代码 command + N
+重构方法 ctrl + T
+
+run-test-debug
