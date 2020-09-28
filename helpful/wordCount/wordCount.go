@@ -49,6 +49,13 @@ func wordCount() {
 	}
 	log.Println()
 
+	// 第四种思路 heap
+	stringBigHeapVal := sortMap4(m, 10)
+	for i := 0; i < 10; i++ {
+		log.Println(stringBigHeapVal[i])
+	}
+	log.Println()
+
 	// 第五种思路
 	resultWords5 := sortMap5(m, 10)
 	for i := 0; i < 10; i++ {
@@ -143,13 +150,56 @@ func sortMap3(m map[string]int, top int) stringHeap {
 	result := make(stringHeap, top)
 	top--
 	for wordHeap.Len() > 0 {
-		//log.Println(wordHeap.Len(), heap.Pop(wordHeap).(Node))
 		result[top] = heap.Pop(wordHeap).(Node)
 		top--
 	}
 	return result
 }
 
+// 第四种思路大顶堆 heap
+type stringBigHeap []Node
+
+func (h stringBigHeap) Len() int {
+	return len(h)
+}
+func (h stringBigHeap) Less(i, j int) bool {
+	//log.Println("compare... ", h[i].count, h[j].count)
+	if h[i].count == h[j].count {
+		return strings.Compare(h[i].name, h[j].name) > 0
+	}
+	return h[i].count > h[j].count
+}
+func (h stringBigHeap) Swap(i, j int) {
+	h[i], h[j] = h[j], h[i]
+}
+func (h *stringBigHeap) Push(x interface{}) {
+	*h = append(*h, x.(Node))
+}
+func (h *stringBigHeap) Pop() interface{} {
+	//fmt.Println("xxx ", len(*h), (*h)[len(*h)-1], *h)
+	x := (*h)[len(*h)-1]
+	*h = (*h)[:len(*h)-1]
+	return x
+}
+func sortMap4(m map[string]int, top int) stringHeap {
+	wordHeap := &stringBigHeap{}
+	for k, v := range m {
+		heap.Push(wordHeap, Node{name: k, count: v}) // 这里有问题，最后一次的 push 并没有进行排序，很奇怪，而最小堆是没有问题的
+		if wordHeap.Len() > top {
+			//log.Println((*wordHeap)[top-1])
+			heap.Pop(wordHeap)
+		}
+	}
+	//log.Println(wordHeap)
+	result := make(stringHeap, top)
+	top--
+	for wordHeap.Len() > 0 {
+		//log.Println(wordHeap.Len(), heap.Pop(wordHeap).(Node))
+		result[top] = heap.Pop(wordHeap).(Node)
+		top--
+	}
+	return result
+}
 // hash 表求解
 
 // 桶排序
