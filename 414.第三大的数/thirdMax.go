@@ -1,7 +1,7 @@
 package leetcode
 
 import (
-	"github.com/emirpasic/gods/trees/redblacktree"
+	//"github.com/emirpasic/gods/trees/redblacktree"
 	"sort"
 )
 
@@ -18,19 +18,19 @@ func thirdMax(nums []int) int {
 	return nums[0]
 }
 
-func thirdMax2(nums []int) int {
-	t := redblacktree.NewWithIntComparator()
-	for _, num := range nums {
-		t.Put(num, nil)
-		if t.Size() > 3 {
-			t.Remove(t.Left().Key)
-		}
-	}
-	if t.Size() == 3 {
-		return t.Left().Key.(int)
-	}
-	return t.Right().Key.(int)
-}
+//func thirdMax2(nums []int) int {
+//	t := redblacktree.NewWithIntComparator()
+//	for _, num := range nums {
+//		t.Put(num, nil)
+//		if t.Size() > 3 {
+//			t.Remove(t.Left().Key)
+//		}
+//	}
+//	if t.Size() == 3 {
+//		return t.Left().Key.(int)
+//	}
+//	return t.Right().Key.(int)
+//}
 
 func thirdMax3(nums []int) int {
 	var a, b, c *int
