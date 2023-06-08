@@ -20,3 +20,17 @@ func maxOperations(nums []int, k int) int {
 	}
 	return ansCount
 }
+
+func maxOperations2(nums []int, k int) int {
+	m := make(map[int]int)
+	res := 0
+	for _, num := range nums {
+		if m[k-num] > 0 {
+			m[k-num]--
+			res++
+		} else {
+			m[num]++
+		}
+	}
+	return res
+}
